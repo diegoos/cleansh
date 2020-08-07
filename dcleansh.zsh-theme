@@ -18,11 +18,25 @@ set_ruby_version() {
   echo -n "[$ruby]"
 }
 
+set_node_version() {
+  local node=''
+
+  if which asdf &> /dev/null; then
+    asdf_node_ver=`asdf current nodejs | awk -F' ' '{print $1}'`
+    node="$asdf_node_ver"
+  fi
+
+  echo -n "[$node]"
+}
+
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 
 # Update prompt
-precmd () { psvar[1]=$(set_ruby_version); }
-PROMPT="${user_host} ${current_dir} $fg[cyan]%1v$reset_color ${git_branch}
+precmd () {
+  psvar[1]=$(set_ruby_version);
+  psvar[2]=$(set_node_version);
+}
+PROMPT="${user_host} ${current_dir} $fg[cyan]%1v $fg[green]%2v$reset_color ${git_branch}
 %B${user_symbol}%b "
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}[ "
