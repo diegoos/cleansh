@@ -1,4 +1,4 @@
-# dCleanSH ZSH Theme
+# CleanSH ZSH Theme
 
 A clean and simple ZSH theme.
 
