@@ -11,22 +11,33 @@ set_ruby_version() {
   elif which rbenv &> /dev/null; then
     ruby="$(rbenv version-name)"
   elif which asdf &> /dev/null; then
-    asdf_ruby_ver=`asdf current ruby | awk -F' ' '{print $1}'`
+    asdf_ruby_ver=`asdf current ruby | awk -F' ' '{print $2}'`
     ruby="$asdf_ruby_ver"
   fi
 
-  echo -n "[$ruby]"
+  echo -n "[rb-$ruby]"
 }
 
 set_node_version() {
   local node=''
 
   if which asdf &> /dev/null; then
-    asdf_node_ver=`asdf current nodejs | awk -F' ' '{print $1}'`
+    asdf_node_ver=`asdf current nodejs | awk -F' ' '{print $2}'`
     node="$asdf_node_ver"
   fi
 
-  echo -n "[$node]"
+  echo -n "[n-$node]"
+}
+
+set_python_version() {
+  local python=''
+
+  if which asdf &> /dev/null; then
+    asdf_python_ver=`asdf current python | awk -F' ' '{print $2}'`
+    python="$asdf_python_ver"
+  fi
+
+  echo -n "[py-$python]"
 }
 
 local git_branch='$(git_prompt_info)%{$reset_color%}'
@@ -35,8 +46,10 @@ local git_branch='$(git_prompt_info)%{$reset_color%}'
 precmd () {
   psvar[1]=$(set_ruby_version);
   psvar[2]=$(set_node_version);
+  psvar[3]=$(set_python_version);
 }
-PROMPT="${user_host} ${current_dir} $fg[cyan]%1v $fg[green]%2v$reset_color ${git_branch}
+
+PROMPT="${user_host} ${current_dir} $fg[cyan]%1v $fg[green]%2v $fg[blue]%3v$reset_color ${git_branch}
 %B${user_symbol}%b "
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}[ "
