@@ -11,7 +11,7 @@ A clean and simple ZSH theme.
 
 ## Screenshot
 
-![image](https://user-images.githubusercontent.com/5846823/89652133-65f05080-d89b-11ea-9e09-5fb65b83cb05.png)
+![image](https://user-images.githubusercontent.com/5846823/115738528-8433a900-a363-11eb-82e4-16a959627995.png)
 
 ## Install
 
