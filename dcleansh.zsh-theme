@@ -11,45 +11,50 @@ set_ruby_version() {
   elif which rbenv &> /dev/null; then
     ruby="$(rbenv version-name)"
   elif which asdf &> /dev/null; then
-    asdf_ruby_ver=`asdf current ruby | awk -F' ' '{print $1}'`
-    ruby="$asdf_ruby_ver"
+    ruby="$(asdf current ruby | awk -F' ' '{print $2}')"
   fi
 
-  echo -n "[rb-$ruby]"
+  if [[ ! -z "$ruby" ]]; then
+    echo -n "[rb-$ruby]"
+  fi
 }
 
 set_node_version() {
   local node=''
 
   if which asdf &> /dev/null; then
-    asdf_node_ver=`asdf current nodejs | awk -F' ' '{print $1}'`
-    node="$asdf_node_ver"
+    node="$(asdf current nodejs | awk -F' ' '{print $2}')"
   fi
 
-  echo -n "[n-$node]"
+  if [[ ! -z "$node" ]]; then
+    echo -n "[n-$node]"
+  fi
 }
 
 set_python_version() {
   local python=''
 
   if which asdf &> /dev/null; then
-    asdf_python_ver=`asdf current python | awk -F' ' '{print $1}'`
-    python="$asdf_python_ver"
+    python="$(asdf current python | awk -F' ' '{print $2}')"
   fi
 
-  echo -n "[py-$python]"
+  if [[ ! -z "$python" ]]; then
+    echo -n "[py-$python]"
+  fi
 }
 
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 
 # Update prompt
 precmd () {
-  psvar[1]=$(set_ruby_version);
-  psvar[2]=$(set_node_version);
-  psvar[3]=$(set_python_version);
+  psvar[1]="$(set_ruby_version) ";
+  psvar[2]="$(set_node_version) ";
+  psvar[3]="$(set_python_version)";
 }
 
-PROMPT="${user_host} ${current_dir} $fg[cyan]%1v $fg[green]%2v $fg[blue]%3v$reset_color ${git_branch}
+local print_versions="$fg[cyan]%1v$fg[green]%2v$fg[blue]%3v$reset_color"
+
+PROMPT="$user_host $current_dir $print_versions $git_branch
 %B${user_symbol}%b "
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}[ "
