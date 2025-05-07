@@ -4,10 +4,10 @@ A clean and simple ZSH theme.
 
 > Features:
 >
-> - Ruby Version with `rvm`, `rbenv` of `asdf`.
+> - Ruby Version with `rvm`, `rbenv` or `asdf`.
 > - Node version with `asdf`.
 > - Python version with `asdf`.
-> - Git branch and tracking changes (showing a `*`).
+> - Git branch and tracking changes (showing a `*` when has changes).
 
 ## Screenshot
 
